@@ -7,9 +7,25 @@ from streamlit import exception as st_exception
 
 # Function to load data
 @st.cache
-@st.experimental_memo
-def load_data():
-    path = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
+def load_data(url):
+    try:
+        # Assuming 'url' is a direct link to a .xlsx file
+        return pd.read_excel(url)
+    except Exception as e:
+        # If any error occurs, print the error message and return an empty DataFrame
+        st.error(f"An error occurred: {e}")
+        return pd.DataFrame()
+
+# Make sure to provide the correct URL to your Excel file
+data_url = 'https://path_to_your_excel_file.xlsx'
+data = load_data(data_url)
+
+# Only proceed if the DataFrame is not empty
+if not data.empty:
+    unique_functions = data['Treatment Function'].unique()
+    selected_function = st.sidebar.selectbox('Select a Treatment Function:', unique_functions)
+else:
+    st.sidebar.write("No data available.")
 
 # Function to plot the bar chart
 def plot_bar_chart(data, selected_function):
