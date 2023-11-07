@@ -9,10 +9,7 @@ def load_data(url):
     try:
         # Use pandas to read the CSV file from the given url
         return pd.read_csv(url)
-    except Exception as e:
-        # If there's an error, show it in the Streamlit app
-        st.error(f"An error occurred while loading the data: {e}")
-        return pd.DataFrame()  # Return an empty DataFrame as a fallback
+   
 
 # Specify the URL of your CSV file
 data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveDataICB.csv'
