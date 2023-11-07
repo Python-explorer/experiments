@@ -47,6 +47,8 @@ def plot_bar_chart(data, selected_function):
 data = load_data()
 
 # Streamlit sidebar - Treatment Function selection
+options = data['Treatment Function'].unique().astype(str).tolist()
+
 selected_function = st.sidebar.selectbox('Select a Treatment Function:', data['Treatment Function'].unique())
 
 # Plot the chart in the main page
