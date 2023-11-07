@@ -17,7 +17,7 @@ def load_data(url):
         return pd.DataFrame()  # Return an empty DataFrame as a fallback
 
 # Specify the URL of your CSV file
-data_url = 'https://raw.githubusercontent.com/yourusername/yourrepo/main/yourfile.csv'
+data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveDataICB.csv'
 
 # Make sure to call load_data with the data_url
 data = load_data(data_url)
