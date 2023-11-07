@@ -17,7 +17,7 @@ def load_data(url):
         return pd.DataFrame()
 
 # Make sure to provide the correct URL to your Excel file
-data_url = 'https://path_to_your_excel_file.xlsx'
+data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
 data = load_data(data_url)
 
 # Only proceed if the DataFrame is not empty
