@@ -1,9 +1,7 @@
-import requests
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from io import BytesIO
-from streamlit import exception as st_exception
 
 # Function to load data
 @st.experimental_memo  # Updated from st.cache to st.experimental_memo
