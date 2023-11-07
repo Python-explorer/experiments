@@ -11,10 +11,7 @@ def load_data(url):
     try:
         # Use pandas to read the excel file from the given url
         return pd.read_excel(url)
-    except Exception as e:
-        # If there's an error, show it in the Streamlit app
-        st.error(f"An error occurred while loading the data: {e}")
-        return pd.DataFrame()  # Return an empty DataFrame as a fallback
+  
 
 # Specify the URL of your Excel file
 data_url = 'https://docs.google.com/spreadsheets/d/1zCrX-_4zPRxXuqHrKwnJ_uLwaU-iH_zVMy65Q7IsO1M/edit?usp=sharing'
