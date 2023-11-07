@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Function to load data
-@st.experimental_memo  # Updated from st.cache to st.experimental_memo
+@st.cache_data  # Updated from st.cache to st.experimental_memo
 def load_data(url):
     try:
         # Use pandas to read the CSV file from the given url
