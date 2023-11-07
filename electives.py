@@ -9,7 +9,7 @@ from streamlit import exception as st_exception
 @st.cache
 @st.experimental_memo
 def load_data():
-    path = 'path/to/your/ElectiveData.xlsx'
+    path = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
 
 # Function to plot the bar chart
 def plot_bar_chart(data, selected_function):
