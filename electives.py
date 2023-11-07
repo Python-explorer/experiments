@@ -1,12 +1,25 @@
+import requests
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+from io import BytesIO
+from streamlit import exception as st_exception
 
 # Function to load data
 @st.cache_data
 def load_data(url):
-    return pd.read_excel(url)
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Will raise an HTTPError if the HTTP request returned an unsuccessful status code
+        return pd.read_excel(BytesIO(response.content))
+    except requests.exceptions.HTTPError as e:
+        raise st_exception(f"HTTPError: {e.response.status_code} {e.response.reason} for URL: {url}")
+    except ValueError as e:
+        raise st_exception(f"ValueError: {e}")
+    except Exception as e:
+        raise st_exception(f"An error occurred: {e}")
 
+# Make sure to provide the correct URL to your Excel file
 data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
 df = load_data(data_url)
 
