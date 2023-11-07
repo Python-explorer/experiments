@@ -9,22 +9,26 @@ from streamlit import exception as st_exception
 @st.cache
 def load_data(url):
     try:
-        # Assuming 'url' is a direct link to a .xlsx file
+        # Use pandas to read the excel file from the given url
         return pd.read_excel(url)
     except Exception as e:
-        # If any error occurs, print the error message and return an empty DataFrame
-        st.error(f"An error occurred: {e}")
-        return pd.DataFrame()
+        # If there's an error, show it in the Streamlit app
+        st.error(f"An error occurred while loading the data: {e}")
+        return pd.DataFrame()  # Return an empty DataFrame as a fallback
 
-# Make sure to provide the correct URL to your Excel file
-data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
+# Specify the URL of your Excel file
+data_url = 'https://raw.githubusercontent.com/yourusername/yourrepo/main/yourfile.xlsx'
+
+# Make sure to call load_data with the data_url
 data = load_data(data_url)
 
-# Only proceed if the DataFrame is not empty
+# Check if data is loaded and not empty before proceeding
 if not data.empty:
-    unique_functions = data['Treatment Function'].unique()
+    # Get the unique values from the 'Treatment Function' column as options for the selectbox
+    unique_functions = data['Treatment Function'].unique().tolist()
     selected_function = st.sidebar.selectbox('Select a Treatment Function:', unique_functions)
 else:
+    # If data is empty, display a message in the sidebar
     st.sidebar.write("No data available.")
 
 # Function to plot the bar chart
