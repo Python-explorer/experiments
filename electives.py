@@ -17,7 +17,7 @@ def load_data(url):
         return pd.DataFrame()  # Return an empty DataFrame as a fallback
 
 # Specify the URL of your Excel file
-data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
+data_url = 'https://docs.google.com/spreadsheets/d/1zCrX-_4zPRxXuqHrKwnJ_uLwaU-iH_zVMy65Q7IsO1M/edit?usp=sharing'
 
 # Make sure to call load_data with the data_url
 data = load_data(data_url)
