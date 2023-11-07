@@ -6,12 +6,25 @@ from io import BytesIO
 from streamlit import exception as st_exception
 
 # Function to load data
-@st.cache_data
+@st.cache
 def load_data(url):
     try:
+        # Send a GET request to the URL
         response = requests.get(url)
-        response.raise_for_status()  # Will raise an HTTPError if the HTTP request returned an unsuccessful status code
-        return pd.read_excel(BytesIO(response.content))
+        # Ensure the request is successful
+        response.raise_for_status()
+        
+        # Check the content type of the response to guess the file type
+        content_type = response.headers.get('Content-Type')
+        if 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in content_type:
+            engine = 'openpyxl'  # For .xlsx files
+        elif 'application/vnd.ms-excel' in content_type:
+            engine = 'xlrd'  # For .xls files
+        else:
+            raise ValueError(f"Unknown Content-Type for Excel file: {content_type}")
+        
+        # Read the content of the response with the appropriate engine
+        return pd.read_excel(BytesIO(response.content), engine=engine)
     except requests.exceptions.HTTPError as e:
         raise st_exception(f"HTTPError: {e.response.status_code} {e.response.reason} for URL: {url}")
     except ValueError as e:
@@ -20,7 +33,7 @@ def load_data(url):
         raise st_exception(f"An error occurred: {e}")
 
 # Make sure to provide the correct URL to your Excel file
-data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
+data_url = 'https://path_to_your_excel_file.xlsx'
 df = load_data(data_url)
 
 # Function to plot the bar chart
