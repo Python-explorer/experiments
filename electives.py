@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 
 # Function to load data
 @st.cache_data
-def load_data():
-    path = '/Users/Feintuck/ElectiveData.xlsx'  # Replace with the path accessible to your web server
-    return pd.read_excel(path, sheet_name='ICB')
+def load_data(url):
+    return pd.read_excel(url)
+
+data_url = 'https://raw.githubusercontent.com/Python-explorer/experiments/main/electives.xlsx'
+df = load_data(data_url)
 
 # Function to plot the bar chart
 def plot_bar_chart(data, selected_function):
