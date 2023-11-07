@@ -33,7 +33,7 @@ def load_data(url):
         raise st_exception(f"An error occurred: {e}")
 
 # Make sure to provide the correct URL to your Excel file
-data_url = 'https://path_to_your_excel_file.xlsx'
+data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
 df = load_data(data_url)
 
 # Function to plot the bar chart
