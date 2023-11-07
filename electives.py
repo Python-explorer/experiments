@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 def load_data(url):
     return pd.read_excel(url)
 
-data_url = 'https://raw.githubusercontent.com/Python-explorer/experiments/main/electives.xlsx'
+data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveData.xlsx'
 df = load_data(data_url)
 
 # Function to plot the bar chart
