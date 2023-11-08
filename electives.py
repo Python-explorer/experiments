@@ -53,8 +53,10 @@ q1 = df_grouped[selected_value_column].quantile(0.25)
 q3 = df_grouped[selected_value_column].quantile(0.75)
 
 # Define colors based on quartiles
-def get_color(value):
-    if value < q1:
+def get_color(value, name):
+    if name == selected_icb_focus and selected_icb_focus != 'None':
+        return 'paleblue'
+    elif value < q1:
         return 'green'
     elif value < q3:
         return 'orange'
@@ -62,7 +64,7 @@ def get_color(value):
         return 'red'
 
 # Apply colors to each row based on its quartile
-df_grouped['color'] = df_grouped[selected_value_column].apply(get_color)
+df_grouped['color'] = df_grouped.apply(lambda row: get_color(row[selected_value_column], row['ICB Name']), axis=1)
 
 # Sort the grouped data by the selected value column in ascending order for the bar chart
 df_grouped = df_grouped.sort_values(by=selected_value_column)
@@ -71,12 +73,7 @@ df_grouped = df_grouped.sort_values(by=selected_value_column)
 chart = alt.Chart(df_grouped).mark_bar().encode(
     x=alt.X('ICB Name:N', sort=alt.EncodingSortField(field=selected_value_column, order='ascending')),
     y=alt.Y(f'{selected_value_column}:Q'),
-    color=alt.condition(
-        alt.datum['ICB Name'] == selected_icb_focus,  # Condition for changing color
-        alt.value('paleblue'),  # The color for selected ICB focus
-        # Use the 'color' field in the data for bar color
-        alt.Color('color:N', scale=None)  
-    ),
+    color=alt.Color('color:N', scale=None),  # Use the 'color' field in the data for bar color
     tooltip=['ICB Name:N', f'{selected_value_column}:Q']
 ).properties(
     width=700  # Adjust the width as necessary
