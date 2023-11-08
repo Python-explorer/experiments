@@ -1,24 +1,37 @@
 import streamlit as st
 import pandas as pd
+import altair as alt
 
 # The URL of the raw CSV file on GitHub
-csv_url = "https://raw.githubusercontent.com/Python-explorer/experiments/main/ElectiveDataICB.csv"
+csv_url = 'https://raw.githubusercontent.com/Python-explorer/experiments/main/ElectiveDataICB.csv'
 
 @st.cache
 def load_data(url):
-    try:
-        # Attempt to load the CSV with default settings
-        data = pd.read_csv(url)
-    except pd.errors.ParserError:
-        # If the ParserError is encountered, try reading the CSV with the following options:
-        data = pd.read_csv(url, delimiter=',', on_bad_lines='skip')
+    # Load the CSV data into a pandas DataFrame
+    data = pd.read_csv(url)
     return data
 
 # Load the data
 df = load_data(csv_url)
 
-# Display the DataFrame in Streamlit
-st.write(df)
+# Streamlit dropdown menu for 'Treatment Function'
+selected_treatment = st.selectbox(
+    'Select a Treatment Function:',
+    options=df['Treatment Function'].unique()
+)
 
-# List the column headers
-st.write(list(df.columns))
+# Filter the DataFrame based on the selected treatment function
+filtered_df = df[df['Treatment Function'] == selected_treatment]
+
+# Create a bar chart using Altair
+chart = alt.Chart(filtered_df).mark_bar().encode(
+    x=alt.X('Total number of incomplete pathways:Q', sort='descending'),
+    y=alt.Y('ICB Name:N', sort='-x'),
+    tooltip=['ICB Name', 'Total number of incomplete pathways']
+).properties(
+    width=600,
+    height=300
+)
+
+# Display the chart
+st.altair_chart(chart, use_container_width=True)
