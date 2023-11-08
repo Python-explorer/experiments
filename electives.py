@@ -17,22 +17,37 @@ def load_data(url):
 # Load the data
 df = load_data(csv_url)
 
-# Filter the DataFrame for the given 'ICB NAME' and exclude rows where 'Treatment Function' is 'Total'
-icb_name_filter = 'NHS SUSSEX INTEGRATED CARE BOARD'
-df_filtered = df[(df['ICB Name'] == icb_name_filter) & (df['Treatment Function'] != 'Total')]
 
-# Group by 'Treatment Function' and sum 'Total number of incomplete pathways'
-df_grouped = df_filtered.groupby('Treatment Function')['Total number of incomplete pathways'].sum().reset_index()
+# Streamlit page title
+st.title('ICB Electives Dashboard Demo')
 
-# Sort the grouped data by 'Total number of incomplete pathways' in ascending order for the bar chart
-df_sorted = df_grouped.sort_values(by='Total number of incomplete pathways', ascending=True)
+# Dropdown to select the column for bar values
+selected_value_column = st.sidebar.selectbox(
+    'Select the column for bar values',
+    options=['Total number of incomplete pathways', 'Total 65 plus weeks']
+)
+
+# Dropdown to select the criteria for rows
+selected_treatment_function = st.sidebar.selectbox(
+    'Select the Treatment Function',
+    options=df['Treatment Function'].unique()
+)
+
+# Filter the DataFrame to exclude 'NHS ENGLAND' from 'ICB Name' and for the selected 'Treatment Function'
+df_filtered = df[(df['ICB Name'] != 'NHS ENGLAND') & (df['Treatment Function'] == selected_treatment_function)]
+
+# Group by 'ICB Name' and sum the selected value column
+df_grouped = df_filtered.groupby('ICB Name')[selected_value_column].sum().reset_index()
+
+# Sort the grouped data by the selected value column in ascending order for the bar chart
+df_sorted = df_grouped.sort_values(by=selected_value_column, ascending=True)
 
 # Create a vertical bar chart using Matplotlib
 fig, ax = plt.subplots()
-ax.bar(df_sorted['Treatment Function'], df_sorted['Total number of incomplete pathways'])
-ax.set_xlabel('Treatment Function')
-ax.set_ylabel('Total number of incomplete pathways')
-ax.set_title('Total Incomplete Pathways by Treatment Function for NHS SUSSEX INTEGRATED CARE BOARD')
+ax.bar(df_sorted['ICB Name'], df_sorted[selected_value_column])
+ax.set_xlabel('ICB Name')
+ax.set_ylabel(selected_value_column)
+ax.set_title(f'{selected_value_column} by ICB Name for {selected_treatment_function}')
 plt.xticks(rotation=90)  # Rotate the x-axis labels to show them more clearly
 
 # Display the chart
