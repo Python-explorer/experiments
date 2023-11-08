@@ -19,6 +19,8 @@ data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveDat
 # Load the data
 data = load_data(data_url)
 
+st.write(data.columns)
+
 # Main app
 def main():
     if not data.empty:
