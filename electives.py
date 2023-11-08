@@ -9,9 +9,7 @@ csv_url = 'https://raw.githubusercontent.com/Python-explorer/experiments/main/El
 def load_data(url):
     # Load the CSV data into a pandas DataFrame
     data = pd.read_csv(url)
-    # Ensure 'Total number of incomplete pathways' is numeric for sorting
-    data['Total number of incomplete pathways'] = pd.to_numeric(data['Total number of incomplete pathways'], errors='coerce')
-    return data
+  
 
 # Load the data
 df = load_data(csv_url)
