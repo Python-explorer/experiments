@@ -77,6 +77,7 @@ chart = alt.Chart(df_grouped).mark_bar().encode(
     tooltip=['ICB Name:N', f'{selected_value_column}:Q']
 ).properties(
     width=700  # Adjust the width as necessary
+    height=700
 )
 
 # Display the Altair chart in the Streamlit app
