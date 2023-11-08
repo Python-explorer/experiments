@@ -12,11 +12,13 @@ PAGES = {
 st.sidebar.title('Navigation')
 selection = st.sidebar.radio("Go to", list(PAGES.keys()))
 
-if selection == "Descriptive Statistics":
-    import electives
+module = PAGES[selection]
+if module == "electives":
+    electives = importlib.import_module(module)
+    importlib.reload(electives)  # This reloads the module
     electives.app()
-elif selection == "Long waits analysis tool":
-    import longwaits
+elif module == "longwaits":
+    electives = importlib.import_module(module)
+    importlib.reload(longwaits)  # This reloads the module
     longwaits.app()
-
 # Add elif blocks for additional pages as needed
