@@ -48,19 +48,36 @@ df_filtered = df[(df['ICB Name'] != 'NHS ENGLAND') & (df['Treatment Function'] =
 # Group by 'ICB Name' and sum the selected value column
 df_grouped = df_filtered.groupby('ICB Name')[selected_value_column].sum().reset_index()
 
+# Calculate quartiles for the selected value column
+q1 = df_grouped[selected_value_column].quantile(0.25)
+q3 = df_grouped[selected_value_column].quantile(0.75)
+
+# Define colors based on quartiles
+def get_color(value):
+    if value < q1:
+        return 'green'
+    elif value < q3:
+        return 'orange'
+    else:
+        return 'red'
+
+# Apply colors to each row based on its quartile
+df_grouped['color'] = df_grouped[selected_value_column].apply(get_color)
+
 # Sort the grouped data by the selected value column in ascending order for the bar chart
-df_sorted = df_grouped.sort_values(by=selected_value_column, ascending=True)
+df_grouped = df_grouped.sort_values(by=selected_value_column)
 
 # Prepare the Altair chart
-chart = alt.Chart(df_sorted).mark_bar().encode(
-    x='ICB Name:N',
-    y=f'{selected_value_column}:Q',
-    tooltip=['ICB Name:N', f'{selected_value_column}:Q'],
+chart = alt.Chart(df_grouped).mark_bar().encode(
+    x=alt.X('ICB Name:N', sort=alt.EncodingSortField(field=selected_value_column, order='ascending')),
+    y=alt.Y(f'{selected_value_column}:Q'),
     color=alt.condition(
         alt.datum['ICB Name'] == selected_icb_focus,  # Condition for changing color
-        alt.value('paleblue'),  # The color for selected ICB
-        alt.value('lightgray')  # The default color
-    )
+        alt.value('paleblue'),  # The color for selected ICB focus
+        # Use the 'color' field in the data for bar color
+        alt.Color('color:N', scale=None)  
+    ),
+    tooltip=['ICB Name:N', f'{selected_value_column}:Q']
 ).properties(
     width=700  # Adjust the width as necessary
 )
