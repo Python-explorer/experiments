@@ -5,14 +5,17 @@ import pandas as pd
 @st.cache_resource
 def load_data(url):
     try:
-        data = pd.read_csv(url)
+        # Attempt to read a CSV file. The 'error_bad_lines' parameter will skip any problematic lines.
+        # The 'warn_bad_lines' parameter will print a warning message for any lines that are skipped.
+        # You might need to adjust the 'sep' parameter if a delimiter other than a comma is used.
+        data = pd.read_csv(url, error_bad_lines=False, warn_bad_lines=True)
         return data
     except Exception as e:
         st.error(f"Failed to load data: {e}")
         return pd.DataFrame()
 
 # URL to the CSV file
-data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveDataICB.csv'
+data_url = 'https://raw.githubusercontent.com/yourusername/yourrepo/main/yourdata.csv'
 
 # Load the data
 data = load_data(data_url)
