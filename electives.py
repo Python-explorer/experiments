@@ -1,15 +1,21 @@
 import streamlit as st
 import pandas as pd
 
-# Function to load CSV data from a URL
-@st.cache_resource
-def load_data(url):
+# The URL of the raw CSV file on GitHub
+csv_url = "https://raw.githubusercontent.com/your-username/your-repo/main/your-file.csv"
 
-  data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveDataICB.csv'
+@st.cache
+def load_data(url):
+    # Load the CSV data into a pandas DataFrame
+    data = pd.read_csv(url)
+    return data
 
 # Load the data
-data = load_data(data_url)
-data.columns = [col.strip() for col in data.columns]
+df = load_data(csv_url)
 
-st.write(data.columns)
+# Display the DataFrame in Streamlit
+st.write(df)
+
+# List the column headers
+st.write(list(df.columns))
 
