@@ -66,7 +66,7 @@ for x in df_sorted[selected_value_column]:
         colors.append('red')
 
 # Create a vertical bar chart with increased figure size for better readability
-fig, ax = plt.subplots(figsize=(15, 8))
+fig, ax = plt.subplots(figsize=(15, 15))
 
 # Plot each bar individually to set colors, including the ICB focus
 for i, (icb_name, value) in enumerate(zip(df_sorted['ICB Name'], df_sorted[selected_value_column])):
