@@ -46,7 +46,7 @@ df_grouped = df_filtered.groupby('ICB Name')[selected_value_column].sum().reset_
 df_sorted = df_grouped.sort_values(by=selected_value_column, ascending=True)
 
 # Create a vertical bar chart using Matplotlib
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(15, 8))
 ax.bar(df_sorted['ICB Name'], df_sorted[selected_value_column])
 ax.set_xlabel('ICB Name')
 ax.set_ylabel(selected_value_column)
