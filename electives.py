@@ -9,7 +9,7 @@ def load_data(url):
         # The 'warn_bad_lines' parameter will print a warning message for any lines that are skipped.
         # You might need to adjust the 'sep' parameter if a delimiter other than a comma is used.
       data = pd.read_csv(url, on_bad_lines='warn')
-        return data
+    return data
     except Exception as e:
         st.error(f"Failed to load data: {e}")
         return pd.DataFrame()
