@@ -1,28 +1,28 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import altair as alt
 
 # The URL of the raw CSV file on GitHub
 csv_url = 'https://raw.githubusercontent.com/Python-explorer/experiments/main/ElectiveDataICB.csv'
 
-@st.cache_data
+@st.cache
 def load_data(url):
     # Load the CSV data into a pandas DataFrame
     data = pd.read_csv(url)
-    # Handle thousands separator if present
+    # Handle thousands separator if present and convert to numeric
     data['Total number of incomplete pathways'] = pd.to_numeric(
         data['Total number of incomplete pathways'].str.replace(',', ''), errors='coerce')
     data['Total 65 plus weeks'] = pd.to_numeric(
         data['Total 65 plus weeks'].str.replace(',', ''), errors='coerce')
+    # Replace 'INTEGRATED CARE BOARD' with 'ICB' in the 'ICB Name' column
+    data['ICB Name'] = data['ICB Name'].str.replace('INTEGRATED CARE BOARD', 'ICB')
     return data
 
 # Load the data
 df = load_data(csv_url)
-df['ICB Name'] = df['ICB Name'].str.replace('INTEGRATED CARE BOARD', 'ICB')
 
-
-# Streamlit page title
-st.sidebar.header('Electives System Comparison Demo')
+# Sidebar title
+st.sidebar.header('ICB Electives Dashboard Demo')
 
 # Sidebar dropdown for selecting the value column
 selected_value_column = st.sidebar.selectbox(
@@ -51,35 +51,19 @@ df_grouped = df_filtered.groupby('ICB Name')[selected_value_column].sum().reset_
 # Sort the grouped data by the selected value column in ascending order for the bar chart
 df_sorted = df_grouped.sort_values(by=selected_value_column, ascending=True)
 
-# Calculate quartiles for the selected value column
-q1 = df_sorted[selected_value_column].quantile(0.25)
-q3 = df_sorted[selected_value_column].quantile(0.75)
+# Prepare the Altair chart
+chart = alt.Chart(df_sorted).mark_bar().encode(
+    x='ICB Name:N',
+    y=f'{selected_value_column}:Q',
+    tooltip=['ICB Name:N', f'{selected_value_column}:Q'],
+    color=alt.condition(
+        alt.datum['ICB Name'] == selected_icb_focus,  # Condition for changing color
+        alt.value('paleblue'),  # The color for selected ICB
+        alt.value('lightgray')  # The default color
+    )
+).properties(
+    width=700  # Adjust the width as necessary
+)
 
-# Assign colors based on quartiles
-colors = []
-for x in df_sorted[selected_value_column]:
-    if x < q1:
-        colors.append('green')
-    elif x < q3:
-        colors.append('orange')
-    else:
-        colors.append('red')
-
-# Create a vertical bar chart with increased figure size for better readability
-fig, ax = plt.subplots(figsize=(32, 23))
-
-# Plot each bar individually to set colors, including the ICB focus
-for i, (icb_name, value) in enumerate(zip(df_sorted['ICB Name'], df_sorted[selected_value_column])):
-    color = 'blue' if icb_name == selected_icb_focus and selected_icb_focus != 'None' else colors[i]
-    ax.bar(icb_name, value, color=color)
-
-ax.set_xlabel('ICB Name', fontsize=20)
-ax.set_ylabel(selected_value_column, fontsize=20)
-ax.set_title(f'{selected_value_column} by ICB Name for {selected_treatment_function}', fontsize=20)
-plt.xticks(rotation=45, ha='right', fontsize=20)  # Adjust the rotation and alignment of x-axis labels
-
-# Improve the layout to prevent label overlap
-plt.tight_layout()
-
-# Display the chart
-st.pyplot(fig)
+# Display the Altair chart in the Streamlit app
+st.altair_chart(chart, use_container_width=True)
