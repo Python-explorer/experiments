@@ -29,8 +29,8 @@ chart = alt.Chart(filtered_df).mark_bar().encode(
     y=alt.Y('Total number of incomplete pathways:Q'),
     tooltip=['ICB Name', 'Total number of incomplete pathways']
 ).properties(
-    width=600,
-    height=300
+    width=800,
+    height=1000
 )
 
 # Display the chart
