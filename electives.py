@@ -20,6 +20,8 @@ def load_data(url):
 df = load_data(csv_url)
 df['ICB Name'] = df['ICB Name'].str.replace('INTEGRATED CARE BOARD', 'ICB')
 
+# Filter the DataFrame to exclude 'NHS ENGLAND' from 'ICB Name'
+df_filtered = df[(df['ICB Name'] != 'NHS ENGLAND') & (df['Treatment Function'] == selected_treatment_function)]
 
 # Streamlit page title
 st.title('ICB Electives Dashboard Demo')
@@ -42,9 +44,6 @@ selected_icb_focus = st.sidebar.selectbox(
     options=['None'] + list(df['ICB Name'].unique())
 )
 
-# Filter the DataFrame to exclude 'NHS ENGLAND' from 'ICB Name'
-df_filtered = df[(df['ICB Name'] != 'NHS ENGLAND') & (df['Treatment Function'] == selected_treatment_function)]
-
 # Group by 'ICB Name' and sum the selected value column
 df_grouped = df_filtered.groupby('ICB Name')[selected_value_column].sum().reset_index()
 
@@ -66,7 +65,7 @@ for x in df_sorted[selected_value_column]:
         colors.append('red')
 
 # Create a vertical bar chart with increased figure size for better readability
-fig, ax = plt.subplots(figsize=(18, 15))
+fig, ax = plt.subplots(figsize=(22, 20))
 
 # Plot each bar individually to set colors, including the ICB focus
 for i, (icb_name, value) in enumerate(zip(df_sorted['ICB Name'], df_sorted[selected_value_column])):
