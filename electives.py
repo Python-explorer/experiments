@@ -7,12 +7,11 @@ csv_url = "https://github.com/Python-explorer/experiments/blob/main/ElectiveData
 @st.cache
 def load_data(url):
     try:
-        # Attempt to load the CSV with the default settings.
+        # Attempt to load the CSV with default settings
         data = pd.read_csv(url)
     except pd.errors.ParserError:
-        # Attempt to load the CSV with a specified delimiter and error_bad_lines set to False.
-        # Adjust the delimiter to match the CSV file's actual delimiter, e.g., ',', ';', '\t', etc.
-        data = pd.read_csv(url, delimiter=',', error_bad_lines=False)
+        # If the ParserError is encountered, try reading the CSV with the following options:
+        data = pd.read_csv(url, delimiter=',', on_bad_lines='skip')
     return data
 
 # Load the data
