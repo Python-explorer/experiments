@@ -18,6 +18,7 @@ data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveDat
 
 # Load the data
 data = load_data(data_url)
+data.columns = [col.strip() for col in data.columns]
 
 st.write(data.columns)
 
