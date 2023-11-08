@@ -12,6 +12,8 @@ def load_data(url):
     # Handle thousands separator if present
     data['Total number of incomplete pathways'] = pd.to_numeric(
         data['Total number of incomplete pathways'].str.replace(',', ''), errors='coerce')
+    data['Total 65 plus weeks'] = pd.to_numeric(
+        data['Total 65 plus weeks'].str.replace(',', ''), errors='coerce')
     return data
 
 # Load the data
