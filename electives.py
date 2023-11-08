@@ -22,15 +22,3 @@ data.columns = [col.strip() for col in data.columns]
 
 st.write(data.columns)
 
-# Main app
-def main():
-    if not data.empty:
-        st.write("Unique values in 'Treatment Function' column:")
-        # Display the unique values in the column
-        unique_values = data['Treatment Function'].unique()
-        st.write(unique_values)
-    else:
-        st.write("No data received.")
-
-if __name__ == "__main__":
-    main()
