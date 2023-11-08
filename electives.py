@@ -25,7 +25,7 @@ def main():
         unique_values = data['Treatment Function'].unique()
         st.write(unique_values)
     else:
-        st.write("No data available.")
+        st.write("Fish.")
 
 if __name__ == "__main__":
     main()
