@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import altair as alt
+import matplotlib.pyplot as plt
 
 # The URL of the raw CSV file on GitHub
 csv_url = 'https://raw.githubusercontent.com/Python-explorer/experiments/main/ElectiveDataICB.csv'
@@ -23,15 +23,16 @@ selected_treatment = st.selectbox(
 # Filter the DataFrame based on the selected treatment function
 filtered_df = df[df['Treatment Function'] == selected_treatment]
 
-# Create a vertical bar chart using Altair
-chart = alt.Chart(filtered_df).mark_bar().encode(
-    x=alt.X('ICB Name:N', sort='-y'),  # Sort bars by the 'Total number of incomplete pathways' in descending order
-    y=alt.Y('Total number of incomplete pathways:Q'),
-    tooltip=['ICB Name', 'Total number of incomplete pathways']
-).properties(
-    width=1200,
-    height=500
-)
+# Sort the filtered DataFrame based on 'Total number of incomplete pathways' in descending order
+sorted_df = filtered_df.sort_values(by='Total number of incomplete pathways', ascending=False)
+
+# Create a vertical bar chart using Matplotlib
+fig, ax = plt.subplots()
+ax.bar(sorted_df['ICB Name'], sorted_df['Total number of incomplete pathways'])
+ax.set_xlabel('ICB Name')
+ax.set_ylabel('Total number of incomplete pathways')
+ax.set_title('Total Incomplete Pathways by ICB Name')
+plt.xticks(rotation=90)  # Rotate the x-axis labels to show them more clearly
 
 # Display the chart
-st.altair_chart(chart, use_container_width=True)
+st.pyplot(fig)
