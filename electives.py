@@ -4,7 +4,6 @@ import altair as alt
 
 def app():
     st.title('Descriptive Statistics')
-    st.write('This is the Descriptive Statistics page.')
 
 # The URL of the raw CSV file on GitHub
 csv_url = 'https://raw.githubusercontent.com/Python-explorer/experiments/main/ElectiveDataICB.csv'
