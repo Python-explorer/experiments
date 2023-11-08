@@ -6,8 +6,13 @@ csv_url = "https://github.com/Python-explorer/experiments/blob/main/ElectiveData
 
 @st.cache
 def load_data(url):
-    # Load the CSV data into a pandas DataFrame
-    data = pd.read_csv(url)
+    try:
+        # Attempt to load the CSV with the default settings.
+        data = pd.read_csv(url)
+    except pd.errors.ParserError:
+        # Attempt to load the CSV with a specified delimiter and error_bad_lines set to False.
+        # Adjust the delimiter to match the CSV file's actual delimiter, e.g., ',', ';', '\t', etc.
+        data = pd.read_csv(url, delimiter=',', error_bad_lines=False)
     return data
 
 # Load the data
@@ -18,4 +23,3 @@ st.write(df)
 
 # List the column headers
 st.write(list(df.columns))
-
