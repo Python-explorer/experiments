@@ -5,7 +5,6 @@ import pandas as pd
 @st.cache_resource
 def load_data(url):
 
-# URL to the CSV file
 data_url = 'https://github.com/Python-explorer/experiments/blob/main/ElectiveDataICB.csv'
 
 # Load the data
