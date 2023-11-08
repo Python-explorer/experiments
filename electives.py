@@ -76,7 +76,7 @@ for i, (icb_name, value) in enumerate(zip(df_sorted['ICB Name'], df_sorted[selec
 ax.set_xlabel('ICB Name', fontsize=20)
 ax.set_ylabel(selected_value_column, fontsize=20)
 ax.set_title(f'{selected_value_column} by ICB Name for {selected_treatment_function}', fontsize=20)
-plt.xticks(rotation=45, ha='right')  # Adjust the rotation and alignment of x-axis labels
+plt.xticks(rotation=45, ha='right', fontsize=20)  # Adjust the rotation and alignment of x-axis labels
 
 # Improve the layout to prevent label overlap
 plt.tight_layout()
