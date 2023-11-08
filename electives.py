@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # Function to load CSV data from a URL
-@st.experimental_memo
+@st.cache_resource
 def load_data(url):
     try:
         data = pd.read_csv(url)
