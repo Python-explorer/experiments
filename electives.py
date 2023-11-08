@@ -20,8 +20,6 @@ def load_data(url):
 df = load_data(csv_url)
 df['ICB Name'] = df['ICB Name'].str.replace('INTEGRATED CARE BOARD', 'ICB')
 
-# Filter the DataFrame to exclude 'NHS ENGLAND' from 'ICB Name'
-df_filtered = df[(df['ICB Name'] != 'NHS ENGLAND') & (df['Treatment Function'] == selected_treatment_function)]
 
 # Streamlit page title
 st.title('ICB Electives Dashboard Demo')
@@ -43,6 +41,9 @@ selected_icb_focus = st.sidebar.selectbox(
     'ICB focus',
     options=['None'] + list(df['ICB Name'].unique())
 )
+
+# Filter the DataFrame to exclude 'NHS ENGLAND' from 'ICB Name'
+df_filtered = df[(df['ICB Name'] != 'NHS ENGLAND') & (df['Treatment Function'] == selected_treatment_function)]
 
 # Group by 'ICB Name' and sum the selected value column
 df_grouped = df_filtered.groupby('ICB Name')[selected_value_column].sum().reset_index()
