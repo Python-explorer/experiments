@@ -8,7 +8,7 @@ def app():
 # The URL of the raw CSV file on GitHub
 csv_url = 'https://raw.githubusercontent.com/Python-explorer/experiments/main/ElectiveDataICB.csv'
 
-@st.cache
+@st.cache_data
 def load_data(url):
     # Load the CSV data into a pandas DataFrame
     data = pd.read_csv(url)
