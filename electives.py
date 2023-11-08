@@ -25,8 +25,8 @@ filtered_df = df[df['Treatment Function'] == selected_treatment]
 
 # Create a bar chart using Altair
 chart = alt.Chart(filtered_df).mark_bar().encode(
-    x=alt.X('Total number of incomplete pathways:Q', sort='descending'),
-    y=alt.Y('ICB Name:N', sort='-x'),
+    x=alt.Y('Total number of incomplete pathways:Q', sort='descending'),
+    y=alt.X('ICB Name:N', sort='-x'),
     tooltip=['ICB Name', 'Total number of incomplete pathways']
 ).properties(
     width=600,
