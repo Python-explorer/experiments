@@ -36,12 +36,6 @@ selected_treatment_function = st.sidebar.selectbox(
     options=df['Treatment Function'].unique()
 )
 
-# Dropdown to select the ICB focus
-selected_icb_focus = st.sidebar.selectbox(
-    'ICB focus',
-    options=['None'] + list(df['ICB Name'].unique()
-)
-
 # Filter the DataFrame to exclude 'NHS ENGLAND' from 'ICB Name' and for the selected 'Treatment Function'
 df_filtered = df[(df['ICB Name'] != 'NHS ENGLAND') & (df['Treatment Function'] == selected_treatment_function)]
 
