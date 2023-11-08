@@ -55,7 +55,7 @@ q3 = df_grouped[selected_value_column].quantile(0.75)
 # Define colors based on quartiles
 def get_color(value, name):
     if name == selected_icb_focus and selected_icb_focus != 'None':
-        return 'paleblue'
+        return 'blue'
     elif value < q1:
         return 'green'
     elif value < q3:
