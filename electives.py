@@ -23,10 +23,10 @@ selected_treatment = st.selectbox(
 # Filter the DataFrame based on the selected treatment function
 filtered_df = df[df['Treatment Function'] == selected_treatment]
 
-# Create a bar chart using Altair
+# Create a vertical bar chart using Altair
 chart = alt.Chart(filtered_df).mark_bar().encode(
-    x=alt.Y('Total number of incomplete pathways:Q', sort='descending'),
-    y=alt.X('ICB Name:N', sort='-x'),
+    x=alt.X('ICB Name:N', sort='-y'),  # Sort bars by the 'Total number of incomplete pathways' in descending order
+    y=alt.Y('Total number of incomplete pathways:Q'),
     tooltip=['ICB Name', 'Total number of incomplete pathways']
 ).properties(
     width=600,
