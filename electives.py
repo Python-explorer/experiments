@@ -76,7 +76,7 @@ chart = alt.Chart(df_grouped).mark_bar().encode(
     color=alt.Color('color:N', scale=None),  # Use the 'color' field in the data for bar color
     tooltip=['ICB Name:N', f'{selected_value_column}:Q']
 ).properties(
-    width=700,  # Adjust the width as necessary
+    width=1000,  # Adjust the width as necessary
     height=700
 )
 
