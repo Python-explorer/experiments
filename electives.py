@@ -22,7 +22,7 @@ def load_data(url):
 df = load_data(csv_url)
 
 # Sidebar title
-st.sidebar.header('ICB Electives Dashboard Demo')
+st.sidebar.header('ICB Electives Descriptive Stats Demo')
 
 # Sidebar dropdown for selecting the value column
 selected_value_column = st.sidebar.selectbox(
