@@ -19,7 +19,7 @@ if module == "electives":
     importlib.reload(electives)  # This reloads the module
     electives.app()
 elif module == "longwaits":
-    electives = importlib.import_module(module)
+    longwaits = importlib.import_module(module)
     importlib.reload(longwaits)  # This reloads the module
     longwaits.app()
 # Add elif blocks for additional pages as needed
