@@ -22,7 +22,7 @@ df['ICB Name'] = df['ICB Name'].str.replace('INTEGRATED CARE BOARD', 'ICB')
 
 
 # Streamlit page title
-st.sidebar.header('ICB Electives Dashboard Demo')
+st.sidebar.header('Electives System Comparison Demo')
 
 # Sidebar dropdown for selecting the value column
 selected_value_column = st.sidebar.selectbox(
