@@ -4,6 +4,7 @@ import streamlit as st
 # Define the navigation structure
 PAGES = {
     "Descriptive Statistics": "electives",
+    "Long waits analysis tool": "longwaits"
     # You can add more pages here
 }
 
