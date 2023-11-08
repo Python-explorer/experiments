@@ -45,6 +45,14 @@ df_grouped = df_filtered.groupby('ICB Name')[selected_value_column].sum().reset_
 # Sort the grouped data by the selected value column in ascending order for the bar chart
 df_sorted = df_grouped.sort_values(by=selected_value_column, ascending=True)
 
+# Calculate quartiles for the selected value column
+q1 = df_sorted[selected_value_column].quantile(0.25)
+q2 = df_sorted[selected_value_column].quantile(0.50)
+q3 = df_sorted[selected_value_column].quantile(0.75)
+
+# Assign colors based on quartiles
+colors = ['green' if x < q1 else 'orange' if x < q3 else 'red' for x in df_sorted[selected_value_column]]
+
 # Create a vertical bar chart using Matplotlib
 fig, ax = plt.subplots(figsize=(15, 8))
 ax.bar(df_sorted['ICB Name'], df_sorted[selected_value_column])
