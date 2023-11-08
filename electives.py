@@ -18,6 +18,7 @@ def load_data(url):
 
 # Load the data
 df = load_data(csv_url)
+df['ICB Name'] = df['ICB Name'].str.replace('INTEGRATED CARE BOARD', 'ICB')
 
 
 # Streamlit page title
