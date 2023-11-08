@@ -55,7 +55,7 @@ colors = ['green' if x < q1 else 'orange' if x < q3 else 'red' for x in df_sorte
 
 # Create a vertical bar chart using Matplotlib
 fig, ax = plt.subplots(figsize=(15, 8))
-ax.bar(df_sorted['ICB Name'], df_sorted[selected_value_column])
+ax.bar(df_sorted['ICB Name'], df_sorted[selected_value_column], color=colors)
 ax.set_xlabel('ICB Name')
 ax.set_ylabel(selected_value_column)
 ax.set_title(f'{selected_value_column} by ICB Name for {selected_treatment_function}')
