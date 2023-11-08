@@ -73,9 +73,9 @@ for i, (icb_name, value) in enumerate(zip(df_sorted['ICB Name'], df_sorted[selec
     color = 'blue' if icb_name == selected_icb_focus and selected_icb_focus != 'None' else colors[i]
     ax.bar(icb_name, value, color=color)
 
-ax.set_xlabel('ICB Name', fontsize=14)
-ax.set_ylabel(selected_value_column, fontsize=14)
-ax.set_title(f'{selected_value_column} by ICB Name for {selected_treatment_function}')
+ax.set_xlabel('ICB Name', fontsize=20)
+ax.set_ylabel(selected_value_column, fontsize=20)
+ax.set_title(f'{selected_value_column} by ICB Name for {selected_treatment_function}', fontsize=20)
 plt.xticks(rotation=45, ha='right')  # Adjust the rotation and alignment of x-axis labels
 
 # Improve the layout to prevent label overlap
