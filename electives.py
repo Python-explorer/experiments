@@ -70,7 +70,7 @@ fig, ax = plt.subplots(figsize=(15, 8))
 
 # Plot each bar individually to set colors, including the ICB focus
 for i, (icb_name, value) in enumerate(zip(df_sorted['ICB Name'], df_sorted[selected_value_column])):
-    color = 'paleblue' if icb_name == selected_icb_focus and selected_icb_focus != 'None' else colors[i]
+    color = 'blue' if icb_name == selected_icb_focus and selected_icb_focus != 'None' else colors[i]
     ax.bar(icb_name, value, color=color)
 
 ax.set_xlabel('ICB Name')
