@@ -15,7 +15,7 @@ selection = st.sidebar.radio("Go to", list(PAGES.keys()))
 if selection == "Descriptive Statistics":
     import electives
     electives.app()
-elif 
+elif selection == "Long waits analysis tool":
     import longwaits
     longwaits.app()
 
